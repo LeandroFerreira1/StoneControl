@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cliente</ui:define>
+
+	<ui:define name="corpo">
+	
+<h:head>
+	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputStylesheet library="css" name="orcamento.css" />
+	<h:outputScript library="js" name="orcamento.js" />
+</h:head>
+
+<h:form>
+
+	<div class="text-center">
+		<h1>LISTAGEM DE CLIENTES</h1>
+	</div>
+	<hr />
+
+	<p:commandButton action="#{clienteMB.novo}" value="Novo" ajax="false" />
+
+	<p:dataTable filteredValue="#{clienteMB.listCliente}" value="#{clienteMB.consultar()}" var="c">
+		<p:column headerText="ID">
+			#{c.id}
+		</p:column>
+
+		<p:column headerText="NOME" filterBy="#{c.nome}">
+			#{c.nome}
+		</p:column>
+
+		<p:column headerText="NOME FANTASIA">
+			#{c.nomeFantasia}
+		</p:column>
+
+		<p:column headerText="TELEFONE">
+			#{c.tel}
+		</p:column>
+		<p:column headerText="E-MAIL">
+			#{c.email}
+		</p:column>
+		<p:column headerText="UF">
+			#{c.idcidade.uf.sigla}
+		</p:column>
+
+		<p:column headerText="AÇÕES">
+			<p:commandButton action="#{clienteMB.setCliente(c)}" value="ALTERAR"
+				ajax="false" />
+			<p:commandButton action="#{clienteMB.delete(c)}" value="DELETE"
+				ajax="false" />
+				<p:commandButton action="#{clienteMB.setCliente(c)}" value="DETALHES"
+				ajax="false" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</h:form>
+</ui:define>
+</ui:composition>

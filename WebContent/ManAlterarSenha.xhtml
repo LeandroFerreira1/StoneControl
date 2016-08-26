@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Alterar Senha</title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+</h:head>
+<h:body>
+	<div id="login-dialog">
+		<h1>Alterar Senha</h1>
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+
+			<h:panelGrid columns="1" styleClass="grid-login">
+    				Usuário: <p:inputText id="Usuário"
+					value="#{usuarioMB.login.login}" required="true" />
+				<input type="hidden" />
+    					Nova Senha: <p:password id="c0"
+					value="#{usuarioMB.login.senha}" />
+				<input type="hidden" />
+						Nova Senha: <p:password id="c1" value="#{usuarioMB.login.senha}" />
+				<input type="hidden" />
+				<h:panelGrid columns="2">
+					<p:commandButton action="#{usuarioMB.senha()}" value="Alterar"
+						ajax="false" onclick=" return comparaSenha();">
+					</p:commandButton>
+					<p:commandButton action="Login.xhtml?faces-redirect=true"
+						value="Cancelar" ajax="false">
+					</p:commandButton>
+				</h:panelGrid>
+			</h:panelGrid>
+			<script>
+				function comparaSenha() {
+					c0 = document.getElementById("c0").value;
+					c1 = document.getElementById("c1").value;
+					d = c0 == c1
+					if (!d)
+						alert("Senhas não Conferem")
+
+					return d;
+				}
+			</script>
+		</h:form>
+	</div>
+</h:body>
+</html>
+

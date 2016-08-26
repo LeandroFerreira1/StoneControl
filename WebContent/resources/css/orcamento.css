@@ -1,0 +1,21 @@
+body {
+}
+
+h1 {
+	font-size: 3em;
+}
+
+.grid-orc {	
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	margin-top: 8px;
+	padding: 10px;
+	font-weight: bold;
+}
+
+
+.btn-primary {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}

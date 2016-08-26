@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Manutenção Cliente</ui:define>
+
+	<ui:define name="corpo">
+	
+<h:head>
+	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputStylesheet library="css" name="orcamento.css" />
+</h:head>
+
+<h:form>	
+	<div class="text-center">
+		<h1>CADASTRO DE CLIENTE</h1>
+	</div>
+
+	<hr />
+
+	<h:panelGrid columns="2">
+		<h:outputText value="ID:" />
+		<p:inputText value="#{clienteMB.cliente.id}" disabled="true" />
+		<h:outputText value="Nome:" />
+		<p:inputText value="#{clienteMB.cliente.nome}" />
+
+		<h:outputText value="CPF:" />
+		<p:inputText value="#{clienteMB.cliente.cpf}" />
+
+		<h:outputText value="RG:" />
+		<p:inputText value="#{clienteMB.cliente.rg}" />
+
+		<h:outputText value="Nome Fantasia:" />
+		<p:inputText value="#{clienteMB.cliente.nomeFantasia}" />
+
+		<h:outputText value="CNPJ:" />
+		<p:inputText value="#{clienteMB.cliente.cpf}" />
+
+		<h:outputText value="Inscrição:" />
+		<p:inputText value="#{clienteMB.cliente.inscricao}" />
+
+		<h:outputText value="Telefone:" />
+		<p:inputMask value="#{clienteMB.cliente.tel}" mask="(99)99999-9999" />
+
+		<h:outputText value="E-mail:" />
+		<p:inputText value="#{clienteMB.cliente.email}" />
+
+		<h:outputText value="CEP:" />
+		<p:inputText value="#{clienteMB.cliente.cep}" />
+
+		<h:outputText value="Cidade:" />
+		<p:autoComplete var="c" itemLabel="#{c.nome}#{c.uf.sigla}"
+			itemValue="#{c}" value="#{clienteMB.cliente.idcidade}"
+			completeMethod="#{cidadeMB.completeText}" converter="cidadeConverter" />
+
+		<h:outputText value="Rua:" />
+		<p:inputText value="#{clienteMB.cliente.logradouro}" />
+
+
+		<h:outputText value="Bairro:" />
+		<p:inputText value="#{clienteMB.cliente.bairro}" />
+
+		<h:outputText value="Complemento:" />
+		<p:inputTextarea rows="03" cols="40"
+			value="#{clienteMB.cliente.complemento}" />
+
+		<h:outputText value="" />
+		<p:commandButton action="#{clienteMB.insertOrUpdate}"
+			value="Confirmar" ajax="false" />
+	</h:panelGrid>
+</h:form>
+</ui:define>
+</ui:composition>

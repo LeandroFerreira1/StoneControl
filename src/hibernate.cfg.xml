@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost/stonecontrol</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">mysql</property>
+
+        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/stonecontrol?createDatabaseIfNotExist=true</property>
+
+		<mapping class="entidade.Unidade" />
+		<mapping class="entidade.Tipo" /> 
+		<mapping class="entidade.Cliente" />
+		<mapping class="entidade.Cidade" /> 
+		<mapping class="entidade.Uf" />
+		<mapping class="entidade.Comercializavel" />
+		<mapping class="entidade.Orcamento" />
+		<mapping class="entidade.ItemOrcamento" />
+		<mapping class="entidade.Espessura" />
+		<mapping class="entidade.Usuario" />
+		
+		
+						
+    </session-factory>
+
+</hibernate-configuration>

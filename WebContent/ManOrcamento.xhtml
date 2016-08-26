@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Manutenção Orçamento</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:head>
+			<h:outputStylesheet library="css" name="sistema.css" />
+			<h:outputStylesheet library="css" name="orcamento.css" />
+			<h:outputScript library="js" name="orcamento.js" />
+		</h:head>
+
+		<h:form styleClass="grid-orc" id="form">
+			<div align="center">
+
+				<div class="text-center">
+					<h1>ORÇAMENTO</h1>
+				</div>
+
+				<hr />
+				
+
+				<h:panelGrid columns="10">
+
+
+
+					<h:outputText value="ID:" />
+					<p:inputText value="#{orcamentoMB.orcamento.id}" disabled="true"
+						size="3" />
+					<h:inputHidden value="#{orcamentoMB.orcamento.id}" />
+
+
+					<h:outputText value="Cliente:" />
+					<p:selectOneMenu value="#{orcamentoMB.orcamento.idCliente.id}">
+						<f:selectItems value="#{clienteMB.consultar()}" var="v"
+							itemLabel="#{v.nome}" itemValue="#{v.id}" />
+					</p:selectOneMenu>
+
+					<h:outputText value="Validade:" />
+					<p:calendar value="#{orcamentoMB.orcamento.validade}" pattern="dd/MM/yyyy" mask="true" size="08" name="data"
+					 />
+
+					<p:commandButton action="#{orcamentoMB.insertOrUpdate}"
+						value="Confirmar" ajax="false" />
+
+				</h:panelGrid>
+				<br />
+				<hr />
+				<br />
+
+				<p:dialog header="Manutenção de Produtos" widgetVar="dlg1"
+					minHeight="40" id="dlg1">
+
+					<h:panelGrid columns="8">
+
+						<h:outputText value="ID Orçamento:" />
+						<p:inputText value="#{orcamentoMB.orcamento.id}" disabled="true"
+							size="1" />
+						<h:inputHidden value="#{orcamentoMB.orcamento.id}" />
+
+						<h:outputText value="Produto:" />
+						<p:selectOneMenu
+							value="#{itemOrcamentoMB.itemOrcamento.idComercializavel.id}">
+							<f:selectItems value="#{comercializavelMB.consultar()}" var="v"
+								itemLabel="#{v.descricao}" itemValue="#{v.id}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+					<h:panelGrid columns="8" inline="center">
+
+						<h:outputText value="Quantidade:" />
+						<p:inputNumber size="4" maxlength="4" id="qtd" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.quantidade}"
+							onchange="calculoMetragem();calculoValorTot();" />
+
+						<h:outputText value="Tipo:" />
+						<p:selectOneMenu size="4" maxlength="4"
+							value="#{itemOrcamentoMB.itemOrcamento.idTipo.id}">
+							<f:selectItems value="#{tipoMB.consultar()}" var="v"
+								itemLabel="#{v.id}" itemValue="#{v.id}" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Unidade:" />
+						<p:selectOneMenu size="4" maxlength="4"
+							value="#{itemOrcamentoMB.itemOrcamento.idUnidade.id}">
+							<f:selectItems value="#{unidadeMB.consultar()}" var="v"
+								itemLabel="#{v.id}" itemValue="#{v.id}" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Comprimento Bruto:" />
+						<p:inputNumber size="4" id="compBruto" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.comprimentoBruto}"
+							onchange="calculoCompLiq();calculoMetragem();calculoValorTot()" />
+
+						<h:outputText value="Altura Bruta:" />
+						<p:inputNumber size="4" id="altBruta" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.alturaBruta}"
+							onchange="calculoAltLiq();calculoMetragem();calculoValorTot()" />
+
+						<h:outputText value="Espessura:" />
+						
+						<p:selectOneMenu
+							value="#{itemOrcamentoMB.itemOrcamento.espessura}">
+							<f:selectItems value="#{itemOrcamentoMB.espessuras()}" var="c"
+								itemLabel="#{c.valor}" itemValue="#{c.valor}" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Altura Liquida:" />
+						<p:inputNumber size="4" id="altLiq" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.alturaLiquida}"
+							onchange="calculoAltLiq() ; calculoMetragem()" />
+
+						<h:outputText value="Comprimento Liquido" />
+						<p:inputNumber size="4" id="compLiq" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.comprimentoLiquido}"
+							onchange="calculoCompLiq() ; calculoMetragem()" />
+
+						<h:outputText value="Metragem" />
+						<p:inputNumber size="4" id="met" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.metragem}"
+							onchange="calculoValorDescReal() ; calculoValorTot()" />
+
+						<h:outputText value="Valor Unitário:" />
+						<p:inputNumber size="4" id="valUnit" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.valorUnitario}"
+							onchange="calculoValorDescReal();calculoValorTot()" />
+
+						<h:outputText value="Desconto:(%)" />
+						<p:inputNumber size="4" id="descPorcent" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="." value="0"
+							onchange="calculoValorDescReal();calculoValorTot()" />
+
+						<h:outputText value="Desconto Real:" />
+						<p:inputNumber size="4" disabled="true" id="descReal"
+							decimalPlaces="2" decimalSeparator="," thousandSeparator="."
+							value="#{itemOrcamentoMB.itemOrcamento.valorDesconto}"
+							onchange="calculoValorTot()" />
+
+						<h:outputText value="Valor Total:" />
+						<p:inputNumber size="4" id="valTot"
+							value="#{itemOrcamentoMB.itemOrcamento.valorItem}" decimalPlaces="2"
+							decimalSeparator="," thousandSeparator="." />
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:commandButton
+							action="#{itemOrcamentoMB.insertOrUpdate(orcamentoMB.orcamento)}"
+							value="ADD" ajax="false" />
+					</h:panelGrid>
+
+				</p:dialog>
+
+				<p:commandButton
+					actionListener="#{itemOrcamentoMB.novo(orcamentoMB.orcamento)}"
+					value="Adicionar" oncomplete="PF('dlg1').show();"
+					update="form:dlg1" />
+
+				<br />
+				<hr />
+				<br />
+
+				<p:dataTable
+					value="#{itemOrcamentoMB.consultar(orcamentoMB.orcamento)}" var="c">
+
+					<p:column headerText="ID">
+						#{c.codigo}
+					</p:column>
+
+					<p:column headerText="PRODUTO">
+					#{c.idComercializavel.descricao}
+				</p:column>
+
+					<p:column headerText="QUANT.">
+						#{c.quantidade}
+					</p:column>
+
+					<p:column headerText="VALOR UNIT.">
+						#{c.valorUnitario}
+						</p:column>
+						
+						<p:column headerText="TOTAL DE ITEM.">
+						#{c.valorItem}
+						</p:column>
+					
+					<p:column headerText="AÇÕES">
+			
+							<p:commandButton
+					actionListener="#{itemOrcamentoMB.setItemOrcamento(c)}"
+					value="ALTERAR" oncomplete="PF('dlg1').show();"
+					update="form:dlg1" />
+						<p:commandButton action="#{itemOrcamentoMB.delete(c)}" value="DELETE"
+							ajax="false" />
+					</p:column>
+
+				</p:dataTable>
+				
+			
+					
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Manutenção Tipo</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:head>
+			<h:outputStylesheet library="css" name="sistema.css" />
+			<h:outputStylesheet library="css" name="orcamento.css" />
+		</h:head>
+		<H1>CADASTRO DE TIPO</H1>
+
+
+		<hr />
+		<h:form>
+			<h:panelGrid columns="2">
+
+				<h:outputText value="NOME:" />
+				<p:inputText value="#{tipoMB.tipo.id}" />
+
+				<h:outputText value="Descrição:" />
+				<p:inputTextarea rows="05" cols="40"
+					value="#{tipoMB.tipo.descricao}" />
+
+				<h:outputText value="" />
+				<p:commandButton action="#{tipoMB.insertOrUpdate}" value="Confirmar"
+					ajax="false" />
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
